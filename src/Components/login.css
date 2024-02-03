@@ -1,0 +1,12 @@
+.header{
+    text-align: center;
+    font-size: 50px;
+    font-weight: bolder;
+    margin-top: 20px;
+}
+.main{
+    overflow: hidden;
+    width: 400px;
+    margin: auto;
+    margin-bottom: 40px;
+}
