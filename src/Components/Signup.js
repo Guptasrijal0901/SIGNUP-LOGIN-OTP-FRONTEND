@@ -68,6 +68,7 @@ export const Signup = () => {
     <label
     className="form-label">Name</label>
     <input type="text" 
+    autocomplete="username"
     className="form-control"
     value={userNAME}
     onChange={(e)=>setuserNAME(e.target.value)}/>
@@ -76,6 +77,7 @@ export const Signup = () => {
     <label 
     className="form-label">Email address</label>
     <input type="text" 
+    autocomplete="username"
     className="form-control" 
     value={userEMAIL}
     onChange={(e)=>setuserEMAIL(e.target.value)} />
@@ -85,6 +87,7 @@ export const Signup = () => {
     className="form-label">Password</label>
     <input type="password" 
     className="form-control" 
+    autoComplete="current-password"
     value={userPASSWORD}
     onChange={(e)=>setuserPASSWORD(e.target.value)} />
   </div>
@@ -108,6 +111,7 @@ export const Signup = () => {
     <label
     className="form-label">Occupation</label>
     <input type="text" 
+    autocomplete="username"
     className="form-control" 
     value={userOCCUPATION}
     onChange={(e)=>setuserOCCUPATION(e.target.value)}/>

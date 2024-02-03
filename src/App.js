@@ -4,6 +4,8 @@ import Login from './Components/Login';
 import Signup from './Components/Signup';
 import Code from './Components/Code';
 import Private from './Components/Private';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import React from 'react'
 
@@ -19,6 +21,7 @@ function App() {
     <Route  path='/Private' Component={Private}/>
     </Routes>
     </Router>
+    <ToastContainer />
     </div>
   );
 }
