@@ -1,9 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./signup.css"
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { toast } from 'react-toastify';
 
 export const Signup = () => {
   const navigate = useNavigate(); 
+  const [userEMAIL, setuserEMAIL] = useState("");
+  const [userNAME, setuserNAME] = useState("");
+  const [userPASSWORD, setuserPASSWORD] = useState("");
+  const [userDOB, setuserDOB] = useState("");
+  const [userPHONENUMBER, setuserPHONENUMBER] = useState(null);
+  const [userOCCUPATION, setuserOCCUPATION] = useState("");
+
+  const handleRegister = async ()=>{
+    try {
+    if (userNAME.trim() === "") return toast.warning("Please enter your name");
+    if (userPASSWORD.trim() === "") return toast.warning("Please enter your password");
+    if (userEMAIL.trim() === "") return toast.warning("Please enter your email");
+    if (userDOB.trim() === "") return toast.warning("Please enter your date");
+    if (!userPHONENUMBER) return toast.warning("Please enter your number");
+    const response = await axios.post("/signup", {
+        userNAME: userNAME,
+        userEMAIL: userEMAIL,
+        userPASSWORD: userPASSWORD,
+        userDOB: userDOB,
+        userPHONENUMBER: userPHONENUMBER,
+        userOCCUPATION: userOCCUPATION
+      })
+      if (response.data.success){
+        toast.success("Successfully registered")
+        navigate("/login")
+      }
+    } catch (error) {
+        if (
+            error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+          ) {
+            toast.error(error.response.data.error);
+          } 
+    }
+  }
+
   return (
     <>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -25,58 +65,56 @@ export const Signup = () => {
     <form>
     <div className='header'> Sign Up </div>
   <div className="mb-3">
-    <label htmlFor="exampleInputName" 
+    <label
     className="form-label">Name</label>
     <input type="text" 
-    className="form-control" 
-    id="exampleInputName" />
+    className="form-control"
+    value={userNAME}
+    onChange={(e)=>setuserNAME(e.target.value)}/>
   </div>
   <div className="mb-3">
-    <label htmlFor="exampleInputEmail" 
+    <label 
     className="form-label">Email address</label>
     <input type="text" 
     className="form-control" 
-    id="exampleInputEmail" />
+    value={userEMAIL}
+    onChange={(e)=>setuserEMAIL(e.target.value)} />
   </div>
   <div className="mb-3">
-    <label htmlFor="exampleInputPassword" 
+    <label 
     className="form-label">Password</label>
     <input type="password" 
     className="form-control" 
-    id="exampleInputPassword" />
+    value={userPASSWORD}
+    onChange={(e)=>setuserPASSWORD(e.target.value)} />
   </div>
   <div className="mb-3">
-    <label htmlFor="exampleInputUserName" 
-    className="form-label">User Name</label>
-    <input type="text" 
-    className="form-control" 
-    id="exampleInputUserName"  />
-  </div>
-  <div className="mb-3">
-    <label htmlFor="exampleInputDOB" 
+    <label
     className="form-label">Date of Birth</label>
     <input type="date" 
     className="form-control" 
-    id="exampleInputDOB"  />
+    value={userDOB}
+    onChange={(e)=>setuserDOB(e.target.value)}  />
   </div>
   <div className="mb-3">
-    <label htmlFor="exampleInputPhoneNumber" 
+    <label
     className="form-label">Phone Number</label>
     <input type="number" 
     className="form-control" 
-    id="exampleInputPhoneNumber" />
+    value={userPHONENUMBER}
+    onChange={(e)=>setuserPHONENUMBER(e.target.value)} />
   </div>
   <div className="mb-3">
-    <label htmlFor="exampleInputOccupation" 
+    <label
     className="form-label">Occupation</label>
     <input type="text" 
     className="form-control" 
-    id="exampleInputOccupation" />
+    value={userOCCUPATION}
+    onChange={(e)=>setuserOCCUPATION(e.target.value)}/>
   </div>
   <div className="button-container" >
-  <button type="submit" 
-  className="btn btn-primary"
-  onClick={()=> navigate("/Login")}>Sign up</button>
+  <button type='button' className="btn btn-primary" 
+  onClick={()=>handleRegister()}>Sign up</button>
   </div>
   <div>
   <h6> Already have account ? 
