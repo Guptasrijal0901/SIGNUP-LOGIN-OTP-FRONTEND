@@ -1,9 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./login.css"
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
+import axios from 'axios';
 
 export const Login = () => {
   const navigate = useNavigate(); 
+  // const [isOtpsend, setisOtpsend] = useState(false);
+  const [userEMAIL, setuserEMAIL] = useState("");
+  const [userPASSWORD, setuserPASSWORD] = useState("");
+
+  const handlelogin = async()=>{
+    try {
+      if (userEMAIL.trim() === "") return toast.warning("Please enter your email");
+      if (userPASSWORD.trim() === "") return toast.warning("Please enter your password");
+      const response = await axios.post("/login", {
+        userEMAIL : userEMAIL,
+        userPASSWORD: userPASSWORD
+      })
+      if(response.data.success){
+        toast.success(response.data.message);
+        navigate("/code")
+      }
+    } catch (error) {
+      console.log(error);
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.error
+      ) {
+        toast.error(error.response.data.error);
+      }
+    }
+  }
   return (
     <>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -25,18 +55,27 @@ export const Login = () => {
     <form>
     <div className='header'> Login </div>
   <div className="mb-3">
-    <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+    <label className="form-label">Email address</label>
+    <input 
+    type="email" 
+    className="form-control"
+    value={userEMAIL}
+    onChange={(e)=> setuserEMAIL(e.target.value)} />
+    <div className="form-text">We'll never share your email with anyone else.</div>
   </div>
   <div className="mb-3">
     <label className="form-label">Password</label>
-    <input type="password" className="form-control" />
+    <input 
+    type="password" 
+    className="form-control"
+    autoComplete="current-password"
+    value={userPASSWORD}
+    onChange={(e)=> setuserPASSWORD(e.target.value)} />
   </div>
   <div className="button-container" >
-  <button type="submit" 
+  <button type="button" 
   className="btn btn-primary"
-  onClick={()=> navigate("/Code")}>Login</button>
+  onClick={()=> handlelogin()}>Login</button>
   </div>
 </form>
 <br></br>

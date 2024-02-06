@@ -76,7 +76,7 @@ export const Signup = () => {
   <div className="mb-3">
     <label 
     className="form-label">Email address</label>
-    <input type="text" 
+    <input type="email" 
     autocomplete="username"
     className="form-control" 
     value={userEMAIL}
@@ -117,7 +117,8 @@ export const Signup = () => {
     onChange={(e)=>setuserOCCUPATION(e.target.value)}/>
   </div>
   <div className="button-container" >
-  <button type='button' className="btn btn-primary" 
+  <button type='button' 
+  className="btn btn-primary" 
   onClick={()=>handleRegister()}>Sign up</button>
   </div>
   <div>
