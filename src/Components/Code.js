@@ -7,7 +7,7 @@ import axios from 'axios';
 
 export const Code = () => {
   const navigate = useNavigate(); 
-  const [isOtpsend, setisOtpsend] = useState(true);
+  const [isOtpsend, setisOtpsend] = useState(false);
   const [code, setcode] = useState(null);
 
   const handleOtpverify = async () =>{
