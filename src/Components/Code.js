@@ -16,9 +16,13 @@ export const Code = () => {
       code: code,
       })
       if(response.data.success){
+        // verify otp 
         setisOtpsend(true) // Set isOtpsend to true before navigating
         toast.success("Welcome to your profile")
-        navigate("/Privatetuser") 
+        navigate("/privatetuser") 
+      }
+      else {
+        toast.error(response.data.error); // Show error message from server response
       }
     } catch (error) {
       console.log(error);
@@ -49,13 +53,14 @@ export const Code = () => {
   <div>
   <button type="button" 
   className="btn btn-primary"
-  onClick={()=> {
-  if(isOtpsend){
-    handleOtpverify();
-  }else{
-    navigate("/login")
-  }
-}}
+  onClick={() => {
+    if (isOtpsend) {
+      handleOtpverify();
+    } else {
+      toast.error("OTP not sent. Please go back to login.");
+      navigate("/login");
+    }
+  }}
 >
 Submit
 </button>
